@@ -39,9 +39,9 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import javax.servlet.http.HttpServletRequest;
 @ControllerAdvice
-public class CustomExceptionHandler /*extends ResponseEntityExceptionHandler*/
+public class CustomExceptionHandler extends ResponseEntityExceptionHandler
 {
-/*
+
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         if(ex.getCause() instanceof InvalidFormatException)
@@ -49,8 +49,9 @@ public class CustomExceptionHandler /*extends ResponseEntityExceptionHandler*/
        if(ex.getCause() instanceof MismatchedInputException)
            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }*/
+    }
 
+/*
     @ResponseStatus(BAD_REQUEST)
     @ResponseBody
     @ExceptionHandler({MethodArgumentNotValidException.class, HttpMessageNotReadableException.class})
@@ -59,6 +60,7 @@ public class CustomExceptionHandler /*extends ResponseEntityExceptionHandler*/
         List<FieldError> fieldErrors = result.getFieldErrors();
         return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
     }
+*/
 
 
 /*    @ExceptionHandler
