@@ -1,6 +1,8 @@
 package com.n26.controller;
 
 import com.n26.exception.CustomExceptionHandler;
+import com.n26.exception.TransactionExpiredException;
+import com.n26.exception.TransactionOutOfFutureException;
 import com.n26.model.TransactionDto;
 import com.n26.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,22 +36,13 @@ public class TransactionController {
     public ResponseEntity<Void> submitTransaction(/*@Valid @NotNull*/ @RequestBody TransactionDto transaction) {
 
         try {
-            long currenttime = Instant.now().atZone(ZoneId.systemDefault()).toEpochSecond();
-            long timediff = currenttime - transaction.getTimestamp().toEpochMilli() / 1000;
-            if (timediff < 0)
-                return new ResponseEntity<>(UNPROCESSABLE_ENTITY);
-
-            if (timediff >= TIME_LIMIT) {
-                // Assume that we are to save a transaction only if it happened within the last minute
-                return new ResponseEntity<>(NO_CONTENT);  // return empty body with 204 status
-            } else {
-                transactionService.addTransaction(transaction);
-                return new ResponseEntity<>(CREATED); // return empty body with 201 status
-            }
-
-        } catch (Exception e) {
-            return new ResponseEntity<>(NO_CONTENT);
+            transactionService.addTransaction(transaction);
+        } catch (TransactionExpiredException e) {
+            return new ResponseEntity<>(NO_CONTENT); // 204 – if the transaction is older than 60 seconds
+        } catch (TransactionOutOfFutureException e) {
+            return new ResponseEntity<>(UNPROCESSABLE_ENTITY); // 422 – if the transaction date is in the future
         }
+        return new ResponseEntity<>(CREATED); // 201 – in case of success
     }
 
     @DeleteMapping(path = "/transactions")
@@ -63,24 +56,4 @@ public class TransactionController {
 
         return ResponseEntity.status(NO_CONTENT).build();
     }
-/*
-    @RequestMapping(value = "/transactions", method = RequestMethod.GET)
-    public ResponseEntity getStatistics(){
-        long current = Instant.now().toEpochMilli();
-        return new ResponseEntity<>(null, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/transactions", method = RequestMethod.POST)
-    public ResponseEntity addStatistics(@RequestBody StatisticsRequest request){
-        long current = Instant.now().toEpochMilli();
-        boolean added = statisticsService.addStatistics(request, current);
-        if(added) {
-            return new ResponseEntity(HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity(HttpStatus.NO_CONTENT);
-        }
-    }
-
-
- */
 }

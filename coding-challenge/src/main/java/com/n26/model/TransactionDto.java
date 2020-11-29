@@ -1,13 +1,9 @@
 package com.n26.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.math.BigDecimal;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 //TransactionDTO ?
 @JsonIgnoreProperties(ignoreUnknown = true)

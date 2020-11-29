@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class StatisticsDto {
 
