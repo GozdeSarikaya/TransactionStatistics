@@ -3,28 +3,27 @@ package com.n26.service;
 import com.n26.exception.TransactionExpiredException;
 import com.n26.exception.TransactionOutOfFutureException;
 import com.n26.model.TransactionDto;
+import com.n26.utils.AppUtility;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.time.Instant;
-import java.time.ZoneId;
 
 @Service
 public class TransactionService {
 
+    @Value("${TIME_LIMIT_INSEC}")
+    private long TIME_LIMIT_INSEC;
+
     @Autowired
     private StatisticsService statisticsService;
 
-    public static final int TIME_LIMIT = 60;
-
     public void addTransaction(TransactionDto transaction) throws TransactionExpiredException, TransactionOutOfFutureException {
 
-        long currenttime = Instant.now().atZone(ZoneId.systemDefault()).toEpochSecond();
-        long timediff = currenttime - transaction.getTimestamp().toEpochMilli() / 1000;
+        long timediff = AppUtility.CalculateTimeDiffs(transaction.getTimestamp());
         if (timediff < 0)
             throw new TransactionOutOfFutureException("Transaction is in the future");
 
-        if (timediff >= TIME_LIMIT)
+        if (timediff >= TIME_LIMIT_INSEC)
             throw new TransactionExpiredException("Transaction is older than 60 seconds.");
 
         this.statisticsService.addTransaction(transaction);

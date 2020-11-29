@@ -11,15 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class StatisticsController {
 
-
-
     @Autowired
     private StatisticsService statisticsService;
 
     @GetMapping("/statistics")
     @ResponseStatus(HttpStatus.OK)
     public StatisticsDto getStatistics() {
-        // O(1) since directly getting from service
         return statisticsService.getStatistics();
     }
 
