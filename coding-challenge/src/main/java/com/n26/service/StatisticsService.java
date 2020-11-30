@@ -39,8 +39,12 @@ public class StatisticsService {
 
     @Async
     public void calculateStatistics() {
-        DoubleSummaryStatistics stat = transaction_map.stream().mapToDouble(TransactionDto::getAmount).summaryStatistics();
-        stats = new StatisticsDto(AppUtility.ToBigDecimal(stat.getSum()), AppUtility.ToBigDecimal(stat.getAverage()), AppUtility.ToBigDecimal(stat.getMax()), AppUtility.ToBigDecimal(stat.getMin()), stat.getCount());
+        if (transaction_map.size() == 0) {
+            stats = new StatisticsDto();
+        } else {
+            DoubleSummaryStatistics stat = transaction_map.stream().mapToDouble(TransactionDto::getAmount).summaryStatistics();
+            stats = new StatisticsDto(AppUtility.ToBigDecimal(stat.getSum()), AppUtility.ToBigDecimal(stat.getAverage()), AppUtility.ToBigDecimal(stat.getMax()), AppUtility.ToBigDecimal(stat.getMin()), stat.getCount());
+        }
     }
 
 

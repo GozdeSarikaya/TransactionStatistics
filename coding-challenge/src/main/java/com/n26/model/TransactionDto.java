@@ -1,10 +1,7 @@
 package com.n26.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.time.Instant;
 
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class TransactionDto {
 
     private double amount;
@@ -16,6 +13,14 @@ public class TransactionDto {
 
     public Instant getTimestamp() {
         return timestamp;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setTimestamp(Instant timestamp) {
+        this.timestamp = timestamp;
     }
 
 }

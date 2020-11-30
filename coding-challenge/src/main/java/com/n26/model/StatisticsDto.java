@@ -56,4 +56,14 @@ public class StatisticsDto {
         return count;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "sum=" + sum +
+                ", avg=" + avg +
+                ", max=" + max +
+                ", min=" + min +
+                ", count=" + count +
+                '}';
+    }
 }
