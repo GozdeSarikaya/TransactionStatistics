@@ -66,14 +66,14 @@ The endpoint should accept an empty request body and return a 204 status code.
 
 ## Project Hierarchy
 
-The following files and folder are part of the project:
+The following listed files and folders are part of the project in the main `coding-challenge` folder:
 
 - README.md : current file
-- coding-challenge/pom.xml : Maven project main file
-- coding-challenge/src/main/java :  Source files of the code.
-- coding-challenge/src/main/resources :  Sample input json file
-- coding-challenge/src/test/java :  Source files for the JUNIT5 unit tests
-- coding-challenge/src/test/resources :  input json files used by the unit tests
+- pom.xml : Maven project main file
+- src/main/java :  Source files of the code.
+- src/main/resources :  Sample input json file
+- src/test/java :  Source files for the JUNIT5 unit tests
+- src/test/resources :  input json files used by the unit tests
 - logs/log.log : Application log file
 
 #### Prerequisites
