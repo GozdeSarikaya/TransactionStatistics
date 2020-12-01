@@ -23,4 +23,11 @@ public class TransactionDto {
         this.timestamp = timestamp;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+                "amount=" + amount +
+                ", timestamp=" + timestamp +
+                '}';
+    }
 }

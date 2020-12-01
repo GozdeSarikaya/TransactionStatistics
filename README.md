@@ -9,6 +9,7 @@ Development mindset:
 - The service does not store all transactions in memory for all time. Transactions not necessary for correct calculation is discarded.
 
 ## Specs
+
 #### POST /transactions
 This endpoint is called to create a new transaction.
 
@@ -68,34 +69,60 @@ The endpoint should accept an empty request body and return a 204 status code.
 The following files and folder are part of the project:
 
 - README.md : current file
-- pom.xml : Maven project main file
-- src/main/java :  Source files of the code.
-- src/main/resources :  Sample input json file
-- src/test/java :  Source files for the JUNIT5 unit tests
-- src/test/resources :  input json files used by the unit tests
+- coding-challenge/pom.xml : Maven project main file
+- coding-challenge/src/main/java :  Source files of the code.
+- coding-challenge/src/main/resources :  Sample input json file
+- coding-challenge/src/test/java :  Source files for the JUNIT5 unit tests
+- coding-challenge/src/test/resources :  input json files used by the unit tests
+- logs/log.log : Application log file
 
 #### Prerequisites
 
-You will need maven version 3.6.3+ and jdk11 to be able to compile and run this application.
+You will need `maven v3.6.3+` and `jdk11` to be able to compile and run this application.
 
-#### Installing
 
-After cloning the project, open a commandline at the main folder that contains project pom.xml file and build the application by using following commands:
+### Logger Initialization
+
+For logger type, logback implementation is used and set `info` log level by default.
+If you want to change the log level, you can find `coding-challenge/src/main/resources/logback.xml` file and change `info` level to `debug, trace or off` level.
+
+#### Compile and run the application
+
+After cloning the project, open a commandline (cmd.exe) at the main folder that contains project `pom.xml` file and build the application by using following commands:
 
 
 ```
-mvn clean
-mvn compile
-mvn integration-test
-mvn package
+mvn clean install
+mvn spring-boot:run
 ```
 
-#### Executing the application
+#### Test the application
 
 The execution of the application requires an input file that can be passed as argument of the execution.
 
 ```
-java -jar target/coding-challenge-1.0.3.jar
+mvn clean integration-test
+```
+
+## Sample http requests
+
+You can use the following http requests to test the application endpoints. Test requests can also be generated using `curl`.
+
+**POST /transactions**
+```
+POST http://localhost:8080/transactions
+Content-Type: application/json
+
+{"amount":"127.96","timestamp":"2020-11-29T11:00:14.630Z"}
+```
+**GET /statistics**
+```
+GET http://localhost:8080/statistics
+```
+
+**DELETE /transactions**
+```
+DELETE http://localhost:8080/transactions
 ```
 
 
